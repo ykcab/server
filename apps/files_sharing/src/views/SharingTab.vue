@@ -63,13 +63,13 @@
 
 			<!-- internal link copy -->
 			<SharingEntryInternal :file-info="fileInfo" />
-
-			<!-- projects -->
-			<CollectionList v-if="fileInfo"
-				:id="`${fileInfo.id}`"
-				type="file"
-				:name="fileInfo.name" />
 		</template>
+
+		<!-- projects -->
+		<CollectionList v-if="fileInfo"
+			:id="`${fileInfo.id}`"
+			type="file"
+			:name="fileInfo.name" />
 	</Tab>
 </template>
 
