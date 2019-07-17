@@ -28,6 +28,7 @@
 
 namespace OCA\Files\Command;
 
+use Error;
 use OC\Files\Filesystem;
 use OC\Files\View;
 use OCP\Files\FileInfo;
@@ -298,7 +299,9 @@ class TransferOwnership extends Command {
 			} catch (\OCP\Files\NotFoundException $e) {
 				$output->writeln('<error>Share with id ' . $share->getId() . ' points at deleted file, skipping</error>');
 			} catch (\Exception $e) {
-				$output->writeln('<error>Could not restore share with id ' . $share->getId() . ':' . $e->getTraceAsString() . '</error>');
+				$output->writeln('<error>Could not restore share with id ' . $share->getId() . ':' . $e->getMessage() . '\n' . $e->getTraceAsString() . '</error>');
+			} catch (\Error $e) {
+				$output->writeln('<error>Could not restore share with id ' . $share->getId() . ':' . $e->getMessage() . '\n' . $e->getTraceAsString() . '</error>');
 			}
 			$progress->advance();
 		}
