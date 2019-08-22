@@ -32,6 +32,8 @@ namespace OCA\Files_Sharing\AppInfo;
 use OCA\Files_Sharing\Middleware\OCSShareAPIMiddleware;
 use OCA\Files_Sharing\Middleware\ShareInfoMiddleware;
 use OCA\Files_Sharing\MountProvider;
+use OCA\Files_Sharing\Notification\Listener;
+use OCA\Files_Sharing\Notification\Notifier;
 use OCP\AppFramework\App;
 use OC\AppFramework\Utility\SimpleContainer;
 use OCA\Files_Sharing\Controller\ExternalSharesController;
@@ -44,6 +46,7 @@ use \OCP\IContainer;
 use OCP\IServerContainer;
 use OCA\Files_Sharing\Capabilities;
 use OCA\Files_Sharing\External\Manager;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 class Application extends App {
 	public function __construct(array $urlParams = array()) {
@@ -179,5 +182,17 @@ class Application extends App {
 		$mountProviderCollection = $server->getMountProviderCollection();
 		$mountProviderCollection->registerProvider($this->getContainer()->query('MountProvider'));
 		$mountProviderCollection->registerProvider($this->getContainer()->query('ExternalMountProvider'));
+	}
+
+	public function register(): void {
+		$manager = $this->getContainer()->getServer()->getNotificationManager();
+		$manager->registerNotifierService(Notifier::class);
+
+		$dispatcher = $this->getContainer()->getServer()->getEventDispatcher();
+		$dispatcher->addListener('OCP\Share::postShare', function(GenericEvent $event) {
+			/** @var Listener $listener */
+			$listener = $this->getContainer()->query(Listener::class);
+			$listener->shareNotification($event);
+		});
 	}
 }
