@@ -60,7 +60,7 @@ class ProviderFactory implements IProviderFactory {
 	private $shareByCircleProvider = null;
 	/** @var bool */
 	private $circlesAreNotAvailable = false;
-	/** @var \OCA\Spreed\Share\RoomShareProvider */
+	/** @var \OCA\Talk\Share\RoomShareProvider */
 	private $roomShareProvider = null;
 
 	/**

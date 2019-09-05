@@ -86,7 +86,7 @@ interface IAppManager {
 	 * @throws AppPathNotFoundException
 	 * @since 8.0.0
 	 */
-	public function enableApp(string $appId, bool $forceEnable): void;
+	public function enableApp(string $appId, bool $forceEnable = false): void;
 
 	/**
 	 * Whether a list of types contains a protected app type
@@ -106,7 +106,7 @@ interface IAppManager {
 	 * @throws \Exception
 	 * @since 8.0.0
 	 */
-	public function enableAppForGroups(string $appId, array $groups, bool $forceEnable): void;
+	public function enableAppForGroups(string $appId, array $groups, bool $forceEnable = false): void;
 
 	/**
 	 * Disable an app for every user

@@ -313,7 +313,7 @@ class AppManager implements IAppManager {
 	 * @param bool $forceEnable
 	 * @throws AppPathNotFoundException
 	 */
-	public function enableApp(string $appId, bool $forceEnable): void {
+	public function enableApp(string $appId, bool $forceEnable = false): void {
 		// Check if app exists
 		$this->getAppPath($appId);
 
@@ -353,7 +353,7 @@ class AppManager implements IAppManager {
 	 * @throws \InvalidArgumentException if app can't be enabled for groups
 	 * @throws AppPathNotFoundException
 	 */
-	public function enableAppForGroups(string $appId, array $groups, bool $forceEnable): void {
+	public function enableAppForGroups(string $appId, array $groups, bool $forceEnable = false): void {
 		// Check if app exists
 		$this->getAppPath($appId);
 
