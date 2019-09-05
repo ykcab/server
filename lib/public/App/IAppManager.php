@@ -82,10 +82,11 @@ interface IAppManager {
 	 * Enable an app for every user
 	 *
 	 * @param string $appId
+	 * @param bool $forceEnable
 	 * @throws AppPathNotFoundException
 	 * @since 8.0.0
 	 */
-	public function enableApp($appId);
+	public function enableApp(string $appId, bool $forceEnable): void;
 
 	/**
 	 * Whether a list of types contains a protected app type
@@ -101,10 +102,11 @@ interface IAppManager {
 	 *
 	 * @param string $appId
 	 * @param \OCP\IGroup[] $groups
+	 * @param bool $forceEnable
 	 * @throws \Exception
 	 * @since 8.0.0
 	 */
-	public function enableAppForGroups($appId, $groups);
+	public function enableAppForGroups(string $appId, array $groups, bool $forceEnable): void;
 
 	/**
 	 * Disable an app for every user

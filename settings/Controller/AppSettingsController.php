@@ -553,13 +553,7 @@ class AppSettingsController extends Controller {
 
 	public function force(string $appId): JSONResponse {
 		$appId = OC_App::cleanAppId($appId);
-
-		$ignoreMaxApps = $this->config->getSystemValue('app_install_overwrite', []);
-		if (!in_array($appId, $ignoreMaxApps, true)) {
-			$ignoreMaxApps[] = $appId;
-			$this->config->setSystemValue('app_install_overwrite', $ignoreMaxApps);
-		}
-
+		$this->appManager->ignoreNextcloudRequirementForApp($appId);
 		return new JSONResponse();
 	}
 
