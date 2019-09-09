@@ -70,7 +70,7 @@ interface IManager {
 	 * @param string $recipientId
 	 * @return IShare The share object
 	 * @throws \InvalidArgumentException
-	 * @since 17.0.0
+	 * @since 18.0.0
 	 */
 	public function acceptShare(IShare $share, string $recipientId): IShare;
 
