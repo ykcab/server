@@ -24,7 +24,6 @@ declare(strict_types=1);
 
 namespace OCA\Files_Sharing\Notification;
 
-use OC\Share\Share;
 use OCP\IGroupManager;
 use OCP\IURLGenerator;
 use OCP\IUser;
@@ -38,6 +37,8 @@ use OCP\Share\IManager;
 use OCP\Share\IShare;
 
 class Notifier implements INotifier {
+	public const INCOMING_USER_SHARE = 'incoming_user_share';
+	public const INCOMING_GROUP_SHARE = 'incoming_group_share';
 
 	/** @var IFactory */
 	protected $l10nFactory;
@@ -94,7 +95,7 @@ class Notifier implements INotifier {
 	 */
 	public function prepare(INotification $notification, string $languageCode): INotification {
 		if ($notification->getApp() !== 'files_sharing' || $notification->getObjectType() !== 'share') {
-			throw new \InvalidArgumentException();
+			throw new \InvalidArgumentException('Wrong app');
 		}
 		try {
 			$share = $this->shareManager->getShareById($notification->getObjectId(), $notification->getUser());
@@ -114,7 +115,7 @@ class Notifier implements INotifier {
 
 		$l = $this->l10nFactory->get('files_sharing', $languageCode);
 		switch ($notification->getSubject()) {
-			case 'incoming_user_share':
+			case self::INCOMING_USER_SHARE:
 				if ($share->getSharedWith() !== $notification->getUser()) {
 					throw new AlreadyProcessedException();
 				}
@@ -134,7 +135,7 @@ class Notifier implements INotifier {
 				];
 				break;
 
-			case 'incoming_group_share':
+			case self::INCOMING_GROUP_SHARE:
 				$user = $this->userManager->get($notification->getUser());
 				if (!$user instanceof IUser) {
 					throw new AlreadyProcessedException();
