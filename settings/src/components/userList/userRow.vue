@@ -40,8 +40,9 @@
 				 v-if="!loading.delete && !loading.disable && !loading.wipe">
 		</div>
 		<!-- dirty hack to ellipsis on two lines -->
-		<div class="name">{{user.id}}</div>
-		<form class="displayName" :class="{'icon-loading-small': loading.displayName}" v-on:submit.prevent="updateDisplayName">
+		<div class="name">{{user.id}}
+			<div class="displayName">
+		<form v-if="false" class="displayName" :class="{'icon-loading-small': loading.displayName}" v-on:submit.prevent="updateDisplayName">
 			<template v-if="user.backendCapabilities.setDisplayName">
 				<input v-if="user.backendCapabilities.setDisplayName"
 						:id="'displayName'+user.id+rand" type="text"
@@ -52,6 +53,9 @@
 			</template>
 			<div v-else class="name" v-tooltip.auto="t('settings', 'The backend does not support changing the display name')">{{user.displayname}}</div>
 		</form>
+			{{user.displayname}}
+		</div>
+		</div>
 		<form class="password" v-if="settings.canChangePassword && user.backendCapabilities.setPassword" :class="{'icon-loading-small': loading.password}"
 			  v-on:submit.prevent="updatePassword">
 			<input :id="'password'+user.id+rand" type="password" required
@@ -290,7 +294,7 @@ export default {
 
 		/**
 		 * Generate avatar url
-		 * 
+		 *
 		 * @param {string} user The user name
 		 * @param {int} size Size integer, default 32
 		 * @returns {string}
@@ -308,7 +312,7 @@ export default {
 
 		/**
 		 * Format array of groups objects to a string for the popup
-		 * 
+		 *
 		 * @param {array} groups The groups
 		 * @returns {string}
 		 */
@@ -353,7 +357,7 @@ export default {
 
 		/**
 		 * Set user displayName
-		 * 
+		 *
 		 * @param {string} displayName The display name
 		 * @returns {Promise}
 		 */
@@ -361,7 +365,7 @@ export default {
 			let displayName = this.$refs.displayName.value;
 			this.loading.displayName = true;
 			this.$store.dispatch('setUserData', {
-				userid: this.user.id, 
+				userid: this.user.id,
 				key: 'displayname',
 				value: displayName
 			}).then(() => {
@@ -372,7 +376,7 @@ export default {
 
 		/**
 		 * Set user password
-		 * 
+		 *
 		 * @param {string} password The email adress
 		 * @returns {Promise}
 		 */
@@ -385,13 +389,13 @@ export default {
 				value: password
 			}).then(() => {
 				this.loading.password = false;
-				this.$refs.password.value = ''; // empty & show placeholder 
+				this.$refs.password.value = ''; // empty & show placeholder
 			});
 		},
 
 		/**
 		 * Set user mailAddress
-		 * 
+		 *
 		 * @param {string} mailAddress The email adress
 		 * @returns {Promise}
 		 */
@@ -410,7 +414,7 @@ export default {
 
 		/**
 		 * Create a new group and add user to it
-		 * 
+		 *
 		 * @param {string} groups Group id
 		 * @returns {Promise}
 		 */
@@ -430,7 +434,7 @@ export default {
 
 		/**
 		 * Add user to group
-		 * 
+		 *
 		 * @param {object} group Group object
 		 * @returns {Promise}
 		 */
@@ -447,7 +451,7 @@ export default {
 
 		/**
 		 * Remove user from group
-		 * 
+		 *
 		 * @param {object} group Group object
 		 * @returns {Promise}
 		 */
@@ -473,7 +477,7 @@ export default {
 
 		/**
 		 * Add user to group
-		 * 
+		 *
 		 * @param {object} group Group object
 		 * @returns {Promise}
 		 */
@@ -487,7 +491,7 @@ export default {
 
 		/**
 		 * Remove user from group
-		 * 
+		 *
 		 * @param {object} group Group object
 		 * @returns {Promise}
 		 */
@@ -501,7 +505,7 @@ export default {
 
 		/**
 		 * Dispatch quota set request
-		 * 
+		 *
 		 * @param {string|Object} quota Quota in readable format '5 GB' or Object {id: '5 GB', label: '5GB'}
 		 * @returns {string}
 		 */
@@ -510,7 +514,7 @@ export default {
 			// ensure we only send the preset id
 			quota = quota.id ? quota.id : quota;
 			this.$store.dispatch('setUserData', {
-				userid: this.user.id, 
+				userid: this.user.id,
 				key: 'quota',
 				value: quota
 			}).then(() => this.loading.quota = false);
@@ -519,7 +523,7 @@ export default {
 
 		/**
 		 * Validate quota string to make sure it's a valid human file size
-		 * 
+		 *
 		 * @param {string} quota Quota in readable format '5 GB'
 		 * @returns {Promise|boolean}
 		 */
@@ -536,7 +540,7 @@ export default {
 
 		/**
 		 * Dispatch language set request
-		 * 
+		 *
 		 * @param {Object} lang language object {code:'en', name:'English'}
 		 * @returns {Object}
 		 */
@@ -544,7 +548,7 @@ export default {
 			this.loading.languages = true;
 			// ensure we only send the preset id
 			this.$store.dispatch('setUserData', {
-				userid: this.user.id, 
+				userid: this.user.id,
 				key: 'language',
 				value: lang.code
 			}).then(() => this.loading.languages = false);

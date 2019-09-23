@@ -19,13 +19,15 @@
   - along with this program. If not, see <http://www.gnu.org/licenses/>.
   -
   -->
-  
+
 <template>
 	<div id="app-content" class="user-list-grid" v-on:scroll.passive="onScroll">
 		<div class="row" id="grid-header" :class="{'sticky': scrolled && !showConfig.showNewUserForm}">
 			<div id="headerAvatar" class="avatar"></div>
-			<div id="headerName" class="name">{{ t('settings', 'Username') }}</div>
-			<div id="headerDisplayName" class="displayName">{{ t('settings',  'Display name') }}</div>
+			<div id="headerName">
+				<div class="name">{{ t('settings', 'Username') }}</div>
+				<div class="subtitle">{{ t('settings',  'Display name') }}</div>
+			</div>
 			<div id="headerPassword" class="password">{{ t('settings',  'Password') }}</div>
 			<div id="headerAddress" class="mailAddress">{{ t('settings',  'Email') }}</div>
 			<div id="headerGroups" class="groups">{{ t('settings',  'Groups') }}</div>
@@ -34,11 +36,11 @@
 			<div id="headerQuota" class="quota">{{ t('settings', 'Quota') }}</div>
 			<div id="headerLanguages" class="languages"
 				 v-if="showConfig.showLanguages">{{ t('settings', 'Language') }}</div>
-			<div class="headerStorageLocation storageLocation"
+			<div id="theHeaderStorageLocation" class="headerStorageLocation storageLocation"
 				 v-if="showConfig.showStoragePath">{{ t('settings', 'Storage location') }}</div>
-			<div class="headerUserBackend userBackend"
+			<div id="theHeaderUserBackend" class="headerUserBackend userBackend"
 				 v-if="showConfig.showUserBackend">{{ t('settings', 'User backend') }}</div>
-			<div class="headerLastLogin lastLogin" 
+			<div id="theHeaderLastLogin" class="headerLastLogin lastLogin"
 				 v-if="showConfig.showLastLogin">{{ t('settings', 'Last login') }}</div>
 			<div class="userActions"></div>
 		</div>
@@ -56,7 +58,7 @@
 					   autocorrect="off" ref="newusername" pattern="[a-zA-Z0-9 _\.@\-']+"
 					   :disabled="this.settings.newUserGenerateUserID">
 			</div>
-			<div class="displayName">
+			<div class="subtitle">
 				<input id="newdisplayname" type="text" v-model="newUser.displayName"
 					   :placeholder="t('settings', 'Display name')" name="displayname"
 					   autocomplete="off" autocapitalize="none" autocorrect="off">
@@ -197,7 +199,7 @@ export default {
 		 */
 		this.resetForm()
 
-		/** 
+		/**
 		 * Register search
 		 */
 		this.userSearch = new OCA.Search(this.search, this.resetSearch);
@@ -288,10 +290,10 @@ export default {
 		// make sure the infiniteLoading state is changed if we manually
 		// add/remove data from the store
 		usersCount: function(val, old) {
-			// deleting the last user, reset the list 
+			// deleting the last user, reset the list
 			if (val === 0 && old === 1) {
 				this.$refs.infiniteLoading.stateChanger.reset()
-			// adding the first user, warn the infiniteLoader that 
+			// adding the first user, warn the infiniteLoader that
 			// the list is not empty anymore (we don't fetch the newly
 			// added user as we already have all the info we need)
 			} else if (val === 1 && old === 0) {
@@ -306,7 +308,7 @@ export default {
 
 		/**
 		 * Validate quota string to make sure it's a valid human file size
-		 * 
+		 *
 		 * @param {string} quota Quota in readable format '5 GB'
 		 * @returns {Object}
 		 */
@@ -346,7 +348,7 @@ export default {
 			// revert form to original state
 			this.newUser = Object.assign({}, newUser);
 
-			/** 
+			/**
 			 * Init default language from server data. The use of this.settings
 			 * requires a computed variable, which break the v-model binding of the form,
 			 * this is a much easier solution than getter and setter on a computed var
@@ -385,10 +387,10 @@ export default {
 					const statuscode = error.response.data.ocs.meta.statuscode
 					if (statuscode === 102) {
 						// wrong username
-						this.$refs.newusername.focus();	
+						this.$refs.newusername.focus();
 					} else if (statuscode === 107) {
 						// wrong password
-						this.$refs.newuserpassword.focus();	
+						this.$refs.newuserpassword.focus();
 					}
 				}
 			});
@@ -408,7 +410,7 @@ export default {
 
 		/**
 		 * Create a new group
-		 * 
+		 *
 		 * @param {string} groups Group id
 		 * @returns {Promise}
 		 */

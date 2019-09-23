@@ -524,7 +524,6 @@ td, th {
 		visibility: hidden;
 	}
 	&.password,
-	&.displayName,
 	&.mailAddress {
 		min-width: 5em;
 		max-width: 12em;
@@ -705,6 +704,7 @@ span.version {
 	#searchresults {
 		display: none;
 	}
+
 }
 #apps-list.store {
 	.section {
@@ -1342,8 +1342,8 @@ doesnotexist:-o-prefocus, .strengthify-wrapper {
 
 /* USERS LIST -------------------------------------------------------------- */
 #body-settings {
-	$grid-row-height: 46px;
-	$grid-col-min-width: 120px;
+	$grid-row-height: 60px;
+	$grid-col-min-width: 210px;
 	#app-content.user-list-grid {
 		display: grid;
 		grid-auto-columns: 1fr;
@@ -1375,6 +1375,7 @@ doesnotexist:-o-prefocus, .strengthify-wrapper {
 			.userBackend,
 			.lastLogin {
 				min-width: $grid-col-min-width;
+				display: flex;
 			}
 			.groups,
 			.subadmins,
@@ -1389,6 +1390,12 @@ doesnotexist:-o-prefocus, .strengthify-wrapper {
 			}
 			.userActions {
 				min-width: 44px;
+			}
+			.subtitle,
+			.displayName
+			{
+				font-size: 10px;
+				text-color:var(--color-text);
 			}
 
 			/* various */
@@ -1418,16 +1425,25 @@ doesnotexist:-o-prefocus, .strengthify-wrapper {
 			&#grid-header {
 				color: var(--color-text-maxcontrast);
 				z-index: 60; /* above new-user */
+				border-bottom-width: medium;
 
 				#headerDisplayName,
 				#headerPassword,
 				#headerAddress,
 				#headerGroups,
 				#headerSubAdmins,
+				#theHeaderUserBackend,
+				#theHeaderLastLogin,
 				#headerQuota,
+				#theHeaderStorageLocation,
 				#headerLanguages {
 					/* Line up header text with column content for when there’s inputs */
 					padding-left: 7px;
+					text-transform: uppercase;
+				}
+
+				.name {
+					text-transform: uppercase;
 				}
 			}
 			&:hover {
@@ -1441,9 +1457,9 @@ doesnotexist:-o-prefocus, .strengthify-wrapper {
 			> div,
 			> form {
 				grid-row: 1;
-				display: inline-flex;
+				display: block;
 				align-items: center;
-				color: var(--color-text);
+				color: var(--color-text-lighter);
 				position: relative;
 				> input:not(:focus):not(:active) {
 					border-color: transparent;
