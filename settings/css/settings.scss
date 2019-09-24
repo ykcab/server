@@ -1367,7 +1367,6 @@ doesnotexist:-o-prefocus, .strengthify-wrapper {
 
 			/* grid col width */
 			.name,
-			.displayName,
 			.password,
 			.mailAddress,
 			.languages,
@@ -1376,12 +1375,17 @@ doesnotexist:-o-prefocus, .strengthify-wrapper {
 			.lastLogin {
 				min-width: $grid-col-min-width;
 				display: flex;
+				font-size: 15px;
+				color:  var(--color-text-dark);
+				vertical-align: baseline;
 			}
 			.groups,
 			.subadmins,
 			.quota {
 				.multiselect {
 					min-width: $grid-col-min-width;
+					color: var(--color-text-dark);
+					vertical-align: baseline;
 				}
 			}
 			.obfuscated {
@@ -1394,8 +1398,9 @@ doesnotexist:-o-prefocus, .strengthify-wrapper {
 			.subtitle,
 			.displayName
 			{
-				font-size: 10px;
-				text-color:var(--color-text);
+				font-size: 15px;
+				color: var(--color-text-lighter);
+				vertical-align: baseline;
 			}
 
 			/* various */
@@ -1440,10 +1445,13 @@ doesnotexist:-o-prefocus, .strengthify-wrapper {
 					/* Line up header text with column content for when there’s inputs */
 					padding-left: 7px;
 					text-transform: uppercase;
+					color: var(--color-main-text);
+					vertical-align: baseline;
 				}
 
 				.name {
 					text-transform: uppercase;
+					color: var(--color-main-text);
 				}
 			}
 			&:hover {
