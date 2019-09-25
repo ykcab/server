@@ -39,6 +39,7 @@ const Dialogs = {
 	FILEPICKER_TYPE_MOVE: 2,
 	FILEPICKER_TYPE_COPY: 3,
 	FILEPICKER_TYPE_COPY_MOVE: 4,
+	FILEPICKER_TYPE_CUSTOM: 5,
 
 	// used to name each dialog
 	dialogsCounter: 0,
@@ -420,6 +421,16 @@ const Dialogs = {
 					text: t('core', 'Choose'),
 					click: chooseCallback,
 					defaultButton: true
+				});
+			} else if (type === Dialogs.FILEPICKER_TYPE_CUSTOM) {
+				options.buttons.forEach(function(button) {
+					buttonlist.push({
+						text: button.text,
+						click: function() {
+							functionToCall(button.type)
+						},
+						defaultButton: button.defaultButton
+					});
 				});
 			} else {
 				if (type === Dialogs.FILEPICKER_TYPE_COPY || type === Dialogs.FILEPICKER_TYPE_COPY_MOVE) {
@@ -1202,6 +1213,8 @@ const Dialogs = {
 		var buttons = $('.oc-dialog-buttonrow button');
 		switch (type) {
 			case this.FILEPICKER_TYPE_CHOOSE:
+				break;
+			case this.FILEPICKER_TYPE_CUSTOM:
 				break;
 			case this.FILEPICKER_TYPE_COPY:
 				buttons.text(copyText);
