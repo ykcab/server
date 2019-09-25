@@ -46,6 +46,8 @@ use OC\Files\Cache\Scanner;
 use OC\Files\Cache\Updater;
 use OC\Files\Filesystem;
 use OC\Files\Cache\Watcher;
+use OC\Files\Storage\Wrapper\Jail;
+use OC\Files\Storage\Wrapper\Wrapper;
 use OCP\Files\EmptyFileNameException;
 use OCP\Files\FileNameTooLongException;
 use OCP\Files\InvalidCharacterInPathException;
@@ -636,13 +638,38 @@ abstract class Common implements Storage, ILockingStorage, IWriteStreamStorage {
 	}
 
 	/**
+	 * @param IStorage $storage
+	 * @return bool
+	 */
+	private function isStorage(IStorage $storage): bool {
+		while ($storage->instanceOfStorage(Wrapper::class)) {
+			/**
+			 * @var Wrapper $sourceStorage
+			 */
+			$storage = $storage->getWrapperStorage();
+		}
+
+		return $storage === $this;
+	}
+
+	/**
 	 * @param IStorage $sourceStorage
 	 * @param string $sourceInternalPath
 	 * @param string $targetInternalPath
 	 * @return bool
 	 */
 	public function moveFromStorage(IStorage $sourceStorage, $sourceInternalPath, $targetInternalPath) {
-		if ($sourceStorage === $this) {
+		// first unwrap jails as they affect the path
+		while ($sourceStorage->instanceOfStorage(Jail::class)) {
+			/**
+			 * @var Jail $sourceStorage
+			 */
+			$sourceInternalPath = $sourceStorage->getUnjailedPath($sourceInternalPath);
+			$sourceStorage = $sourceStorage->getWrapperStorage();
+		}
+
+		// then check if the storages are the same ignoring wrappers
+		if ($this->isStorage($sourceStorage)) {
 			return $this->rename($sourceInternalPath, $targetInternalPath);
 		}
 
