@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * @copyright Copyright (c) 2019 Morris Jobke <hey@morrisjobke.de>
  *
@@ -21,19 +22,20 @@
 
 namespace Test\Route;
 
-
-use OC\Memcache\ArrayCache;
-use OC\Remote\Instance;
 use OC\Route\Router;
-use OCP\ICache;
-use OCP\IConfig;
 use OCP\ILogger;
 use Test\TestCase;
-use Test\Traits\ClientServiceTrait;
 
+/**
+ * Class RouterTest
+ *
+ * @group DB
+ *
+ * @package Test\Route
+ */
 class RouterTest extends TestCase {
 
-	public function generateRouteProvider() {
+	public function generateRouteProvider(): array {
 		return [
 			['files.view.index', '/index.php/apps/files/'],
 			// the OCS route is the prefixed one for the AppFramework - see /ocs/v1.php for routing details
@@ -43,8 +45,10 @@ class RouterTest extends TestCase {
 
 	/**
 	 * @dataProvider generateRouteProvider
+	 * @param $routeName
+	 * @param $expected
 	 */
-	public function testGenerate($routeName, $expected) {
+	public function testGenerate($routeName, $expected): void {
 		/** @var ILogger $logger */
 		$logger = $this->createMock(ILogger::class);
 		$router = new Router($logger);
