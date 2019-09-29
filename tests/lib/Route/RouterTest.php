@@ -29,8 +29,6 @@ use Test\TestCase;
 /**
  * Class RouterTest
  *
- * @group DB
- *
  * @package Test\Route
  */
 class RouterTest extends TestCase {
