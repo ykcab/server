@@ -1397,7 +1397,7 @@ doesnotexist:-o-prefocus, .strengthify-wrapper {
 			.subtitle,
 			.displayName
 			{
-				color: var(--color-text-lighter);
+				color: var(--color-text-maxcontrast);
 				vertical-align: baseline;
 			}
 
@@ -1442,14 +1442,14 @@ doesnotexist:-o-prefocus, .strengthify-wrapper {
 				#headerLanguages {
 					/* Line up header text with column content for when there’s inputs */
 					padding-left: 7px;
-					text-transform: uppercase;
-					color: var(--color-main-text);
+					text-transform: none;
+					color: var(--color-text-maxcontrast);
 					vertical-align: baseline;
 				}
 
 				.name {
-					text-transform: uppercase;
-					color: var(--color-main-text);
+					text-transform: none;
+					color: var(--color-text-maxcontrast);
 				}
 			}
 			&:hover {
