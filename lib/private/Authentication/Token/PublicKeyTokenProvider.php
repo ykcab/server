@@ -93,6 +93,12 @@ class PublicKeyTokenProvider implements IProvider {
 			throw new WipeTokenException($token);
 		}
 
+		if ($token->getPasswordInvalid() === true) {
+			//The password is invalid we should throw an ExpireTokenException
+			//TODO maybe an passwordExpiredTokenException (that extends)
+			throw new ExpiredTokenException($token);
+		}
+
 		return $token;
 	}
 
@@ -109,6 +115,12 @@ class PublicKeyTokenProvider implements IProvider {
 
 		if ($token->getType() === IToken::WIPE_TOKEN) {
 			throw new WipeTokenException($token);
+		}
+
+		if ($token->getPasswordInvalid() === true) {
+			//The password is invalid we should throw an ExpireTokenException
+			//TODO maybe an passwordExpiredTokenException (that extends)
+			throw new ExpiredTokenException($token);
 		}
 
 		return $token;
