@@ -65,6 +65,14 @@
 			<SharingEntryInternal :file-info="fileInfo" />
 		</template>
 
+		<!-- additionnal entries, use it with cautious -->
+		<div v-for="(section, index) in sections"
+			:ref="'section-' + index"
+			:key="index"
+			class="sharingTab__additionalContent">
+			<component :is="section($refs['section-'+index], fileInfo)" :file-info="fileInfo" />
+		</div>
+
 		<!-- projects -->
 		<CollectionList v-if="fileInfo"
 			:id="`${fileInfo.id}`"
