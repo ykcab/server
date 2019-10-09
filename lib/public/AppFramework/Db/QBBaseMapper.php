@@ -25,6 +25,7 @@ declare(strict_types=1);
 
 namespace OCP\AppFramework\Db;
 
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 
@@ -73,6 +74,72 @@ abstract class QBBaseMapper {
 	public function getTableName(): string {
 		return $this->tableName;
 	}
+
+	/**
+	 * Deletes an entity from the table
+	 * @param BaseEntity $entity the entity that should be deleted
+	 * @return BaseEntity the deleted entity
+	 * @since 14.0.0
+	 */
+	abstract public function delete(BaseEntity $entity): BaseEntity;
+
+	/**
+	 * Creates a new entry in the db from an entity
+	 * @param BaseEntity $entity the entity that should be created
+	 * @return BaseEntity the saved entity with the set id
+	 * @since 14.0.0
+	 * @suppress SqlInjectionChecker
+	 */
+	public function insert(BaseEntity $entity): BaseEntity {
+		// get updated fields to save, fields have to be set using a setter to
+		// be saved
+		$properties = $entity->getUpdatedFields();
+
+		$qb = $this->db->getQueryBuilder();
+		$qb->insert($this->tableName);
+
+		// build the fields
+		foreach($properties as $property => $updated) {
+			$column = $entity->propertyToColumn($property);
+			$getter = 'get' . ucfirst($property);
+			$value = $entity->$getter();
+
+			$type = $this->getParameterTypeForProperty($entity, $property);
+			$qb->setValue($column, $qb->createNamedParameter($value, $type));
+		}
+		$qb->execute();
+
+		return $entity;
+	}
+
+	/**
+	 * Tries to creates a new entry in the db from an entity and
+	 * updates an existing entry if duplicate keys are detected
+	 * by the database
+	 *
+	 * @param Entity $entity the entity that should be created/updated
+	 * @return Entity the saved entity with the (new) id
+	 * @throws \InvalidArgumentException if entity has no id
+	 * @since 15.0.0
+	 * @suppress SqlInjectionChecker
+	 */
+	public function insertOrUpdate(Entity $entity): Entity {
+		try {
+			return $this->insert($entity);
+		} catch (UniqueConstraintViolationException $ex) {
+			return $this->update($entity);
+		}
+	}
+
+	/**
+	 * Updates an entry in the db from an entity
+	 * @throws \InvalidArgumentException if entity has no id
+	 * @param Entity $entity the entity that should be created
+	 * @return Entity the saved entity with the set id
+	 * @since 14.0.0
+	 * @suppress SqlInjectionChecker
+	 */
+	abstract public function update(BaseEntity $entity): BaseEntity;
 
 	/**
 	 * Returns the type parameter for the QueryBuilder for a specific property
