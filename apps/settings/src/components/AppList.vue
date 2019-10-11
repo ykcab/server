@@ -24,6 +24,7 @@
 	<div id="app-content-inner">
 		<div id="apps-list" class="apps-list" :class="{installed: (useBundleView || useListView), store: useAppStoreView}">
 			<template v-if="useListView">
+				<button v-if="showUpdateAll" class="primary" @click="updateAll">{{t('settings', 'Update all')}}</button>
 				<transition-group name="app-list" tag="div" class="apps-list-container">
 					<AppItem v-for="app in apps"
 						:key="app.id"
@@ -91,6 +92,7 @@
 <script>
 import AppItem from './AppList/AppItem'
 import PrefixMixin from './PrefixMixin'
+import pLimit from 'p-limit'
 
 export default {
 	name: 'AppList',
@@ -102,6 +104,12 @@ export default {
 	computed: {
 		loading() {
 			return this.$store.getters.loading('list')
+		},
+		hasPendingUpdate() {
+			return this.apps.find(app => app.update)
+		},
+		showUpdateAll() {
+			return this.hasPendingUpdate && ['installed', 'updates'].includes(this.category)
 		},
 		apps() {
 			let apps = this.$store.getters.getAllApps
@@ -189,12 +197,31 @@ export default {
 		enableBundle(id) {
 			let apps = this.bundleApps(id).map(app => app.id)
 			this.$store.dispatch('enableApp', { appId: apps, groups: [] })
-				.catch((error) => { console.error(error); OC.Notification.show(error) })
+				.catch((error) => {
+					console.error(error)
+					OC.Notification.show(error)
+				})
 		},
 		disableBundle(id) {
 			let apps = this.bundleApps(id).map(app => app.id)
 			this.$store.dispatch('disableApp', { appId: apps, groups: [] })
-				.catch((error) => { OC.Notification.show(error) })
+				.catch((error) => {
+					OC.Notification.show(error)
+				})
+		},
+		updateAll() {
+			const appsToUpdate = []
+			const limit = pLimit(1)
+			this.apps
+				.filter(app => app.update)
+				.forEach(function(app) {
+					appsToUpdate.push(limit(() => this.$store.dispatch('updateApp', { appId: app.id })))
+				})
+			Promise.all(appsToUpdate).then(() => {
+				OC.Settings.Apps.rebuildNavigation()
+			}, (error) => {
+				OC.Notification.show(error)
+			})
 		}
 	}
 }
