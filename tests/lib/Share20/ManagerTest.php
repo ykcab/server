@@ -628,6 +628,8 @@ class ManagerTest extends \Test\TestCase {
 		$nonMoveableMountPermssions->method('getPath')->willReturn('path');
 		$nonMoveableMountPermssions->method('getOwner')
 			->willReturn($owner);
+		$nonMoveableMountPermssions->method('getStorage')
+			->willReturn($storage);
 		$nonMoveableMountPoint = $this->createMock(MountPoint::class);
 		$nonMoveableMountPermssions->method('getMountPoint')->willReturn($nonMoveableMountPoint);
 

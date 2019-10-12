@@ -156,7 +156,7 @@ class TransferOwnership extends Command {
 
 		if ($input->hasArgument('move') && (!$view->is_dir($this->finalTarget) || count($view->getDirectoryContent($this->finalTarget)) > 0)) {
 			$output->writeln("<error>Destination path does not exists or is not empty</error>");
-			return 1;
+			return 3;
 		}
 
 		// analyse source folder
@@ -298,9 +298,7 @@ class TransferOwnership extends Command {
 				}
 			} catch (\OCP\Files\NotFoundException $e) {
 				$output->writeln('<error>Share with id ' . $share->getId() . ' points at deleted file, skipping</error>');
-			} catch (\Exception $e) {
-				$output->writeln('<error>Could not restore share with id ' . $share->getId() . ':' . $e->getMessage() . '\n' . $e->getTraceAsString() . '</error>');
-			} catch (\Error $e) {
+			} catch (\Throwable $e) {
 				$output->writeln('<error>Could not restore share with id ' . $share->getId() . ':' . $e->getMessage() . '\n' . $e->getTraceAsString() . '</error>');
 			}
 			$progress->advance();
