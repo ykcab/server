@@ -91,6 +91,33 @@ $application->registerRoutes(
 				'url' => '/api/v1/quickaccess/get/NodeType',
 				'verb' => 'GET',
 			],
+			[
+				'name' => 'DirectEditingView#edit',
+				'url' => '/direct/{token}',
+				'verb' => 'GET'
+			],
+		],
+		'ocs' => [
+			[
+				'name' => 'DirectEditing#get',
+				'url' => '/api/v1/direct',
+				'verb' => 'GET'
+			],
+			[
+				'name' => 'DirectEditing#templates',
+				'url' => '/api/v1/direct/templates/{editorId}/{creatorId}',
+				'verb' => 'GET'
+			],
+			[
+				'name' => 'DirectEditing#open',
+				'url' => '/api/v1/direct/open',
+				'verb' => 'POST'
+			],
+			[
+				'name' => 'DirectEditing#create',
+				'url' => '/api/v1/direct/create',
+				'verb' => 'POST'
+			],
 		]
 	]
 );

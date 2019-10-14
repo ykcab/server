@@ -31,6 +31,8 @@ return array(
     'OCA\\Files\\Command\\TransferOwnership' => $baseDir . '/../lib/Command/TransferOwnership.php',
     'OCA\\Files\\Controller\\AjaxController' => $baseDir . '/../lib/Controller/AjaxController.php',
     'OCA\\Files\\Controller\\ApiController' => $baseDir . '/../lib/Controller/ApiController.php',
+    'OCA\\Files\\Controller\\DirectEditingController' => $baseDir . '/../lib/Controller/DirectEditingController.php',
+    'OCA\\Files\\Controller\\DirectEditingViewController' => $baseDir . '/../lib/Controller/DirectEditingViewController.php',
     'OCA\\Files\\Controller\\ViewController' => $baseDir . '/../lib/Controller/ViewController.php',
     'OCA\\Files\\Event\\LoadAdditionalScriptsEvent' => $baseDir . '/../lib/Event/LoadAdditionalScriptsEvent.php',
     'OCA\\Files\\Helper' => $baseDir . '/../lib/Helper.php',
