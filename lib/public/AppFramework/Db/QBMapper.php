@@ -26,7 +26,6 @@ namespace OCP\AppFramework\Db;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use OCP\DB\QueryBuilder\IQueryBuilder;
-use PicoFeed\Base;
 
 /**
  * Simple parent class for inheriting your data access layer from. This class
