@@ -131,7 +131,7 @@ class SMB extends Common implements INotifyStorage {
 	private function splitUser($user) {
 		if (strpos($user, '/')) {
 			return explode('/', $user, 2);
-		} elseif (strpos($user, '\\')) {
+		} else if (strpos($user, '\\')) {
 			return explode('\\', $user);
 		} else {
 			return [null, $user];
@@ -199,6 +199,21 @@ class SMB extends Common implements INotifyStorage {
 		throw new StorageAuthException($e->getMessage(), $e);
 	}
 
+	protected function directoryIsReadable(string $path): bool {
+		try {
+			// SMB doesn't seem to have a way to get the permissions of a folder, so instead we
+			// have to use a workaround
+			//
+			// if we try to access a file in a folder we dont have access to we get a Forbidden
+			// if we do have access we got a not found
+			$this->share->stat($path . '/__non_existing__' . uniqid());
+		} catch (ForbiddenException $e) {
+			return false;
+		} catch (NotFoundException $e) {
+			return true;
+		}
+	}
+
 	/**
 	 * @param string $path
 	 * @return \Icewind\SMB\IFileInfo[]
@@ -215,7 +230,13 @@ class SMB extends Common implements INotifyStorage {
 				try {
 					// the isHidden check is done before checking the config boolean to ensure that the metadata is always fetch
 					// so we trigger the below exceptions where applicable
-					$hide = $file->isHidden() && !$this->showHidden;
+					$hidden = $file->isHidden();
+
+					if ($file->isDirectory() && !$hidden) {
+						$hidden = !$this->directoryIsReadable($file->getPath());
+					}
+
+					$hide = !$this->showHidden && $hidden;
 					if ($hide) {
 						$this->logger->debug('hiding hidden file ' . $file->getName());
 					}
