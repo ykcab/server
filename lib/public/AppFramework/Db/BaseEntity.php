@@ -39,7 +39,7 @@ class BaseEntity {
 	 * Simple alternative constructor for building entities from a request
 	 * @param array $params the array which was obtained via $this->params('key')
 	 * in the controller
-	 * @return Entity
+	 * @return BaseEntity
 	 * @since 7.0.0
 	 */
 	public static function fromParams(array $params) {
@@ -59,6 +59,7 @@ class BaseEntity {
 	 * Maps the keys of the row array to the attributes
 	 * @param array $row the row to map onto the entity
 	 * @since 7.0.0
+	 * @return BaseEntity
 	 */
 	public static function fromRow(array $row){
 		$instance = new static();
@@ -89,7 +90,7 @@ class BaseEntity {
 	 * @since 7.0.0
 	 */
 	public function resetUpdatedFields(): void {
-		$this->_updatedFields = array();
+		$this->_updatedFields = [];
 	}
 
 	/**
