@@ -46,8 +46,9 @@ class BaseEntity {
 		$instance = new static();
 
 		foreach($params as $key => $value) {
-			$method = 'set' . ucfirst($key);
-			$instance->$method($value);
+			$setter = 'set' . ucfirst($key);
+			$value = $instance->convertToType($key, $value);
+			$instance->$setter($value);
 		}
 
 		return $instance;
@@ -63,8 +64,9 @@ class BaseEntity {
 		$instance = new static();
 
 		foreach($row as $key => $value){
-			$prop = ucfirst($instance->columnToProperty($key));
-			$setter = 'set' . $prop;
+			$key = $instance->columnToProperty($key);
+			$setter = 'set' . ucfirst($key);
+			$value = $instance->convertToType($key, $value);
 			$instance->$setter($value);
 		}
 
@@ -72,7 +74,6 @@ class BaseEntity {
 
 		return $instance;
 	}
-
 
 	/**
 	 * @return array with attribute and type
@@ -104,10 +105,8 @@ class BaseEntity {
 			$this->markFieldUpdated($name);
 
 			// if type definition exists, cast to correct type
-			if($args[0] !== null && array_key_exists($name, $this->getFieldTypes())) {
-				settype($args[0], $this->getFieldTypes()[$name]);
-			}
-			$this->$name = $args[0];
+			$value = $this->convertToType($name, $args[0]);
+			$this->$name = $value;
 
 		} else {
 			throw new \BadFunctionCallException($name .
@@ -247,6 +246,14 @@ class BaseEntity {
 			throw new \BadFunctionCallException($attributeName .
 				' is not a valid attribute');
 		}
+	}
+
+	public function convertToType(string $name, $value) {
+		if ($value !== null && array_key_exists($name, $this->getFieldTypes())) {
+			settype($value, $this->getFieldTypes()[$name]);
+		}
+
+		return $value;
 	}
 
 }
