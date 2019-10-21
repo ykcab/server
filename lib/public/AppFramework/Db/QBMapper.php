@@ -55,7 +55,7 @@ abstract class QBMapper extends QBBaseMapper {
 
 	/**
 	 * Creates a new entry in the db from an entity
-	 * @param Base $entity the entity that should be created
+	 * @param BaseEntity $entity the entity that should be created
 	 * @return BaseEntity the saved entity with the set id
 	 * @since 14.0.0
 	 * @suppress SqlInjectionChecker
@@ -90,8 +90,8 @@ abstract class QBMapper extends QBBaseMapper {
 	/**
 	 * Updates an entry in the db from an entity
 	 * @throws \InvalidArgumentException if entity has no id
-	 * @param Entity $entity the entity that should be created
-	 * @return Entity the saved entity with the set id
+	 * @param BaseEntity $entity the entity that should be created
+	 * @return BaseEntity the saved entity with the set id
 	 * @since 14.0.0
 	 * @suppress SqlInjectionChecker
 	 */
