@@ -24,7 +24,10 @@
 	<div id="app-content-inner">
 		<div id="apps-list" class="apps-list" :class="{installed: (useBundleView || useListView), store: useAppStoreView}">
 			<template v-if="useListView">
-				<button v-if="showUpdateAll" class="primary" @click="updateAll">{{t('settings', 'Update all')}}</button>
+				<div class="counter">
+					{{ counter }} {{t('settings', 'apps have an update available')}}
+					<button v-if="showUpdateAll" class="primary" @click="updateAll">{{t('settings', 'Update all')}}</button>
+				</div>
 				<transition-group name="app-list" tag="div" class="apps-list-container">
 					<AppItem v-for="app in apps"
 						:key="app.id"
@@ -102,14 +105,17 @@ export default {
 	mixins: [PrefixMixin],
 	props: ['category', 'app', 'search'],
 	computed: {
+		counter() {
+			return this.apps.filter(app => app.update).length
+		},
 		loading() {
 			return this.$store.getters.loading('list')
 		},
-		hasPendingUpdate() {
+		getAppsPendingUpdate() {
 			return this.apps.find(app => app.update)
 		},
 		showUpdateAll() {
-			return this.hasPendingUpdate && ['installed', 'updates'].includes(this.category)
+			return this.getAppsPendingUpdate && ['installed', 'updates'].includes(this.category)
 		},
 		apps() {
 			let apps = this.$store.getters.getAllApps

@@ -943,9 +943,15 @@ span.version {
 	.section {
 		cursor: pointer;
 	}
+
 	.app-list-move {
 		transition: transform 1s;
 	}
+
+	.counter{
+		padding-left: 20px;
+	}
+
 	&.installed {
 		.apps-list-container {
 			display: table;
