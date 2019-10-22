@@ -25,7 +25,9 @@
 		<div id="apps-list" class="apps-list" :class="{installed: (useBundleView || useListView), store: useAppStoreView}">
 			<template v-if="useListView">
 				<div class="counter">
-					{{ counter }} {{t('settings', 'apps have an update available')}}
+					{{ counter }} {{ t('settings', 'apps have an update available') }}
+				</div>
+				<div class ="btn-primary">
 					<button v-if="showUpdateAll" class="primary" @click="updateAll">{{t('settings', 'Update all')}}</button>
 				</div>
 				<transition-group name="app-list" tag="div" class="apps-list-container">
@@ -111,11 +113,11 @@ export default {
 		loading() {
 			return this.$store.getters.loading('list')
 		},
-		getAppsPendingUpdate() {
+		hasPendingUpdate() {
 			return this.apps.find(app => app.update)
 		},
 		showUpdateAll() {
-			return this.getAppsPendingUpdate && ['installed', 'updates'].includes(this.category)
+			return this.hasPendingUpdate && ['installed', 'updates'].includes(this.category)
 		},
 		apps() {
 			let apps = this.$store.getters.getAllApps
@@ -218,17 +220,14 @@ export default {
 		updateAll() {
 			const appsToUpdate = []
 			const limit = pLimit(1)
-			this.apps
-				.filter(app => app.update)
-				.forEach(function(app) {
-					appsToUpdate.push(limit(() => this.$store.dispatch('updateApp', { appId: app.id })))
-				})
 			Promise.all(appsToUpdate).then(() => {
-				OC.Settings.Apps.rebuildNavigation()
-			}, (error) => {
-				OC.Notification.show(error)
+				this.apps
+					.filter(app => app.update)
+					.map(app => limit(() => this.$store.dispatch('updateApp', { appId: app.id }))
+					)
 			})
 		}
+
 	}
 }
 </script>
