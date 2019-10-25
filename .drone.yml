@@ -2,10 +2,6 @@ kind: pipeline
 name: jsunit
 
 steps:
-- name: submodules
-  image: docker:git
-  commands:
-    - git submodule update --init
 - name: jsunit
   image: nextcloudci/jsunit:jsunit-5
   commands:
@@ -74,10 +70,6 @@ kind: pipeline
 name: handlebars
 
 steps:
-- name: submodules
-  image: docker:git
-  commands:
-    - git submodule update --init
 - name: handlebars
   image: node
   commands:
@@ -1129,7 +1121,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-checksums-v1
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1154,7 +1146,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-external-storage
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1179,7 +1171,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-provisioning-v1
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1204,7 +1196,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-tags
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1229,7 +1221,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-caldav
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1254,7 +1246,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-comments
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1279,7 +1271,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-comments-search
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1304,7 +1296,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-favorites
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1329,7 +1321,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-provisioning-v2
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1354,7 +1346,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-webdav-related
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1379,7 +1371,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-sharees-features
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1404,7 +1396,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-sharees-v2-features
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1429,7 +1421,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-sharing-v1
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1454,7 +1446,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-sharing-v1-part2
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1479,7 +1471,7 @@ steps:
   commands:
     - git submodule update --init
 - name: integration-sharing-v1-part3
-  image: nextcloudci/integration-php7.1:1
+  image: nextcloudci/integration-php7.1:2
   commands:
     - bash tests/drone-run-integration-tests.sh || exit 0
     - ./occ maintenance:install --admin-pass=admin --data-dir=/dev/shm/nc_int
@@ -1801,7 +1793,7 @@ steps:
   commands:
     - git submodule update --init
 - name: acceptance-access-levels
-  image: nextcloudci/acceptance-php7.1:acceptance-php7.1-2
+  image: nextcloudci/acceptance-php7.3:acceptance-php7.3-2
   commands:
     - tests/acceptance/run-local.sh --timeout-multiplier 10 --nextcloud-server-domain acceptance-access-levels --selenium-server selenium:4444 allow-git-repository-modifications features/access-levels.feature
 
@@ -1831,7 +1823,7 @@ steps:
   commands:
     - git submodule update --init
 - name: acceptance-app-comments
-  image: nextcloudci/acceptance-php7.1:acceptance-php7.1-2
+  image: nextcloudci/acceptance-php7.3:acceptance-php7.3-2
   commands:
     - tests/acceptance/run-local.sh --timeout-multiplier 10 --nextcloud-server-domain acceptance-app-comments --selenium-server selenium:4444 allow-git-repository-modifications features/app-comments.feature
 
@@ -1861,7 +1853,7 @@ steps:
   commands:
     - git submodule update --init
 - name: acceptance-app-files
-  image: nextcloudci/acceptance-php7.1:acceptance-php7.1-2
+  image: nextcloudci/acceptance-php7.3:acceptance-php7.3-2
   commands:
     - tests/acceptance/run-local.sh --timeout-multiplier 10 --nextcloud-server-domain acceptance-app-files --selenium-server selenium:4444 allow-git-repository-modifications features/app-files.feature
 
@@ -1891,7 +1883,7 @@ steps:
   commands:
     - git submodule update --init
 - name: acceptance-app-files-sharing
-  image: nextcloudci/acceptance-php7.1:acceptance-php7.1-2
+  image: nextcloudci/acceptance-php7.3:acceptance-php7.3-2
   commands:
     - tests/acceptance/run-local.sh --timeout-multiplier 10 --nextcloud-server-domain acceptance-app-files-sharing --selenium-server selenium:4444 allow-git-repository-modifications features/app-files-sharing.feature
 
@@ -1921,7 +1913,7 @@ steps:
   commands:
     - git submodule update --init
 - name: acceptance-app-files-sharing-link
-  image: nextcloudci/acceptance-php7.1:acceptance-php7.1-2
+  image: nextcloudci/acceptance-php7.3:acceptance-php7.3-2
   commands:
     - tests/acceptance/run-local.sh --timeout-multiplier 10 --nextcloud-server-domain acceptance-app-files-sharing-link --selenium-server selenium:4444 allow-git-repository-modifications features/app-files-sharing-link.feature
 
@@ -1951,7 +1943,7 @@ steps:
   commands:
     - git submodule update --init
 - name: acceptance-app-files-tags
-  image: nextcloudci/acceptance-php7.1:acceptance-php7.1-2
+  image: nextcloudci/acceptance-php7.3:acceptance-php7.3-2
   commands:
     - tests/acceptance/run-local.sh --timeout-multiplier 10 --nextcloud-server-domain acceptance-app-files-tags --selenium-server selenium:4444 allow-git-repository-modifications features/app-files-tags.feature
 
@@ -1981,7 +1973,7 @@ steps:
   commands:
     - git submodule update --init
 - name: acceptance-app-theming
-  image: nextcloudci/acceptance-php7.1:acceptance-php7.1-2
+  image: nextcloudci/acceptance-php7.3:acceptance-php7.3-2
   commands:
     - tests/acceptance/run-local.sh --timeout-multiplier 10 --nextcloud-server-domain acceptance-app-theming --selenium-server selenium:4444 allow-git-repository-modifications features/app-theming.feature
 
@@ -2011,7 +2003,7 @@ steps:
   commands:
     - git submodule update --init
 - name: acceptance-header
-  image: nextcloudci/acceptance-php7.1:acceptance-php7.1-2
+  image: nextcloudci/acceptance-php7.3:acceptance-php7.3-2
   commands:
     - tests/acceptance/run-local.sh --timeout-multiplier 10 --nextcloud-server-domain acceptance-header --selenium-server selenium:4444 allow-git-repository-modifications features/header.feature
 
@@ -2041,7 +2033,7 @@ steps:
   commands:
     - git submodule update --init
 - name: acceptance-login
-  image: nextcloudci/acceptance-php7.1:acceptance-php7.1-2
+  image: nextcloudci/acceptance-php7.3:acceptance-php7.3-2
   commands:
     - tests/acceptance/run-local.sh --timeout-multiplier 10 --nextcloud-server-domain acceptance-login --selenium-server selenium:4444 allow-git-repository-modifications features/login.feature
 
@@ -2071,7 +2063,7 @@ steps:
   commands:
     - git submodule update --init
 - name: acceptance-users
-  image: nextcloudci/acceptance-php7.1:acceptance-php7.1-2
+  image: nextcloudci/acceptance-php7.3:acceptance-php7.3-2
   commands:
     - tests/acceptance/run-local.sh --timeout-multiplier 10 --nextcloud-server-domain acceptance-users --selenium-server selenium:4444 allow-git-repository-modifications features/users.feature
 
@@ -2101,7 +2093,7 @@ steps:
   commands:
     - git submodule update --init
 - name: acceptance-apps
-  image: nextcloudci/acceptance-php7.1:acceptance-php7.1-2
+  image: nextcloudci/acceptance-php7.3:acceptance-php7.3-2
   commands:
     - tests/acceptance/run-local.sh --timeout-multiplier 10 --nextcloud-server-domain acceptance-apps --selenium-server selenium:4444 allow-git-repository-modifications features/apps.feature
 
@@ -2373,58 +2365,3 @@ trigger:
     - pull_request
     - push
 
----
-kind: pipeline
-name: ui-regression
-
-steps:
-- name: submodules
-  image: docker:git
-  commands:
-    - git submodule update --init
-- name: ui-regression
-  image: nextcloudci/ui-regression:ui-regression-1
-  commands:
-    - cd tests/ui-regression
-    - npm install
-    - chown -R pptruser out node_modules
-    - bash -c "until curl -s http://ui-regression-php-master > /dev/null && curl -s http://ui-regression-php > /dev/null; do sleep 2; done"
-    - sudo -u pptruser node runTests.js || true
-    - echo "The result can be found at https://s3.bitgrid.net/nextcloud-ui-regression/nextcloud/server/${DRONE_PULL_REQUEST}/index.html"
-  shm_size: '1gb'
-
-services:
-- name: ui-regression-php
-  image: nextcloudci/server:server-1
-  commands:
-    - . /etc/apache2/envvars
-    - rm -fr /var/www/html
-    - mkdir /var/www/html && cp -rT . /var/www/html && chown -R www-data:www-data /var/www/html
-    - rm -fr /var/www/html/config/config.php /var/www/html/data/*
-    - apache2 -DFOREGROUND
-- name: ui-regression-php-master
-  image: nextcloudci/server:server-1
-  commands:
-    - . /etc/apache2/envvars
-    - rm -fr /var/www/html/config/config.php /var/www/html/data/*
-    - su www-data -c "cd /var/www/html/ && git checkout $DRONE_REPO_BRANCH && git pull && git submodule update"
-    - apache2 -DFOREGROUND
-- name: publish-s3
-  image: plugins/s3
-  settings:
-    endpoint: https://ci-assets.nextcloud.com
-    bucket: nextcloud-ui-regression
-    path_style: true
-    source: tests/ui-regression/out/**/*
-    strip_prefix: tests/ui-regression/out/
-    acl: public-read
-    target: ${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/${DRONE_PULL_REQUEST}
-  secrets: [ aws_access_key_id, aws_secret_access_key ]
-
-trigger:
-  branch:
-    - master
-    - stable*
-  event:
-    - pull_request
-    - push
