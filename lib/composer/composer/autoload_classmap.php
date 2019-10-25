@@ -538,6 +538,7 @@ return array(
     'OC\\Authentication\\Exceptions\\InvalidProviderException' => $baseDir . '/lib/private/Authentication/Exceptions/InvalidProviderException.php',
     'OC\\Authentication\\Exceptions\\InvalidTokenException' => $baseDir . '/lib/private/Authentication/Exceptions/InvalidTokenException.php',
     'OC\\Authentication\\Exceptions\\LoginRequiredException' => $baseDir . '/lib/private/Authentication/Exceptions/LoginRequiredException.php',
+    'OC\\Authentication\\Exceptions\\PasswordExpiredTokenException' => $baseDir . '/lib/private/Authentication/Exceptions/PasswordExpiredTokenException.php',
     'OC\\Authentication\\Exceptions\\PasswordLoginForbiddenException' => $baseDir . '/lib/private/Authentication/Exceptions/PasswordLoginForbiddenException.php',
     'OC\\Authentication\\Exceptions\\PasswordlessTokenException' => $baseDir . '/lib/private/Authentication/Exceptions/PasswordlessTokenException.php',
     'OC\\Authentication\\Exceptions\\TwoFactorAuthRequiredException' => $baseDir . '/lib/private/Authentication/Exceptions/TwoFactorAuthRequiredException.php',

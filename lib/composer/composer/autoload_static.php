@@ -567,6 +567,7 @@ class ComposerStaticInit53792487c5a8370acc0b06b1a864ff4c
         'OC\\Authentication\\Exceptions\\InvalidProviderException' => __DIR__ . '/../../..' . '/lib/private/Authentication/Exceptions/InvalidProviderException.php',
         'OC\\Authentication\\Exceptions\\InvalidTokenException' => __DIR__ . '/../../..' . '/lib/private/Authentication/Exceptions/InvalidTokenException.php',
         'OC\\Authentication\\Exceptions\\LoginRequiredException' => __DIR__ . '/../../..' . '/lib/private/Authentication/Exceptions/LoginRequiredException.php',
+        'OC\\Authentication\\Exceptions\\PasswordExpiredTokenException' => __DIR__ . '/../../..' . '/lib/private/Authentication/Exceptions/PasswordExpiredTokenException.php',
         'OC\\Authentication\\Exceptions\\PasswordLoginForbiddenException' => __DIR__ . '/../../..' . '/lib/private/Authentication/Exceptions/PasswordLoginForbiddenException.php',
         'OC\\Authentication\\Exceptions\\PasswordlessTokenException' => __DIR__ . '/../../..' . '/lib/private/Authentication/Exceptions/PasswordlessTokenException.php',
         'OC\\Authentication\\Exceptions\\TwoFactorAuthRequiredException' => __DIR__ . '/../../..' . '/lib/private/Authentication/Exceptions/TwoFactorAuthRequiredException.php',
