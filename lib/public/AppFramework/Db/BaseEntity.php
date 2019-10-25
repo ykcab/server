@@ -249,10 +249,7 @@ class BaseEntity {
 		}
 	}
 
-	/**
-	 * @since 18.0.0
-	 */
-	public function convertToType(string $name, $value) {
+	protected function convertToType(string $name, $value) {
 		if ($value !== null && array_key_exists($name, $this->getFieldTypes())) {
 			settype($value, $this->getFieldTypes()[$name]);
 		}
