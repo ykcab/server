@@ -23,12 +23,16 @@ declare(strict_types=1);
  *
  */
 
-return [
-	'routes' => [
-		[
-			'name' => 'Preview#getPreview',
-			'url' => '/preview',
-			'verb' => 'GET',
+/** @var \OCA\Files_Trashbin\AppInfo\Application $application */
+$application = \OC::$server->query(\OCA\Files_Trashbin\AppInfo\Application::class);
+$application->registerRoutes($this,
+	[
+		'routes' => [
+			[
+				'name' => 'Preview#getPreview',
+				'url' => '/preview',
+				'verb' => 'GET',
+			],
 		],
-	],
-];
+	]
+);
