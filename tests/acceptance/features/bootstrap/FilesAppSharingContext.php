@@ -437,7 +437,7 @@ class FilesAppSharingContext implements Context, ActorAwareInterface {
 	/**
 	 * @Then I see that the password protect is disabled while loading
 	 */
-	public function iSeeThatTheWorkingIconForPasswordProtectIsShown() {
+	public function iSeeThatThePasswordProtectIsDisabledWhileLoading() {
 		PHPUnit_Framework_Assert::assertNotNull($this->actor->find(self::disabledPasswordProtectField(), 10));
 
 		if (!WaitFor::elementToBeEventuallyNotShown(
@@ -495,8 +495,7 @@ class FilesAppSharingContext implements Context, ActorAwareInterface {
 	public function iShareTheLinkForProtectedByThePassword($fileName, $password) {
 		$this->iShareTheLinkFor($fileName);
 		$this->iProtectTheSharedLinkWithThePassword($password);
-		$this->iSeeThatTheWorkingIconForPasswordProtectIsShown();
-		$this->iSeeThatTheWorkingIconForPasswordProtectIsEventuallyNotShown();
+		$this->iSeeThatThePasswordProtectIsDisabledWhileLoading();
 	}
 
 	private function showShareLinkMenuIfNeeded() {
