@@ -234,9 +234,9 @@ class FilesAppSharingContext implements Context, ActorAwareInterface {
 	/**
 	 * @return Locator
 	 */
-	public static function passwordProtectDisabledWhileLoading() {
-		return Locator::forThe()->css(".share-link-password form input.action-input__input[disabled]")->descendantOf(self::shareLinkMenu())->
-				describedAs("Password protect disabled input in the details view in Files app");
+	public static function disabledPasswordProtectField() {
+		return Locator::forThe()->css(".share-link-password input.action-input__input[disabled]")->descendantOf(self::shareLinkMenu())->
+				describedAs("Disabled password protect field in the details view in Files app");
 	}
 
 	/**
@@ -438,18 +438,13 @@ class FilesAppSharingContext implements Context, ActorAwareInterface {
 	 * @Then I see that the password protect is disabled while loading
 	 */
 	public function iSeeThatTheWorkingIconForPasswordProtectIsShown() {
-		PHPUnit_Framework_Assert::assertNotNull($this->actor->find(self::passwordProtectDisabledWhileLoading(), 10));
-	}
+		PHPUnit_Framework_Assert::assertNotNull($this->actor->find(self::disabledPasswordProtectField(), 10));
 
-	/**
-	 * @Then I see that the working icon for password protect is eventually not shown
-	 */
-	public function iSeeThatTheWorkingIconForPasswordProtectIsEventuallyNotShown() {
 		if (!WaitFor::elementToBeEventuallyNotShown(
 				$this->actor,
-				self::passwordProtectDisabledWhileLoading(),
+				self::disabledPasswordProtectField(),
 				$timeout = 10 * $this->actor->getFindTimeoutMultiplier())) {
-			PHPUnit_Framework_Assert::fail("The working icon for password protect is still shown after $timeout seconds");
+			PHPUnit_Framework_Assert::fail("The password protect field is still disabled after $timeout seconds");
 		}
 	}
 

@@ -127,7 +127,6 @@ Feature: app-files-sharing-link
     And I share the link for "welcome.txt"
     When I protect the shared link with the password "abcdef"
     Then I see that the password protect is disabled while loading
-    And I see that the working icon for password protect is eventually not shown
     And I see that the link share is password protected
     # As Talk is not enabled in the acceptance tests of the server the checkbox
     # is never shown.
